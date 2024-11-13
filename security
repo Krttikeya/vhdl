@@ -1,0 +1,29 @@
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+
+entity SecuritySystem is
+    Port ( 
+        clk : in STD_LOGIC;
+        reset : in STD_LOGIC;
+        keypad_input : in STD_LOGIC_VECTOR(3 downto 0);
+        lock : out STD_LOGIC
+    );
+end SecuritySystem;
+
+architecture Behavioral of SecuritySystem is
+    constant correct_code: STD_LOGIC_VECTOR(3 downto 0) := "1101";
+begin
+    process(clk, reset)
+    begin
+        if reset = '1' then
+            lock <= '1';
+        elsif rising_edge(clk) then
+            if keypad_input = correct_code then
+                lock <= '0';
+            else
+                lock <= '1';
+            end if;
+        end if;
+    end process;
+end Behavioral;
